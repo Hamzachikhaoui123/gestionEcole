@@ -9,37 +9,33 @@ import { FileInterceptor } from '@nestjs/platform-express';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
   @UseInterceptors(
     FileInterceptor('photo',{
       storage:diskStorage({
         destination:"./uploads",
         filename:(req,file,callback)=>{
-          const uniqueSuffix=Date.now()+'-' +Math.round(Math.random()*1e9);
+          const uniqueSuffix=Date.now()+'-'+Math.round(Math.random()*1e9);
           const ext=extname(file.originalname);
-          callback(null,`${file.fieldname}-${uniqueSuffix}${ext}`);
-
+          callback(null,`${file.fieldname}-${req.body.name}${ext}`);
         }
       })
     })
   )
   @Post()
-
   async create(
     @Body() createUserDto: CreateUserDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
     const photoPath = file ? file.path : null;
-    console.log('createUserDto',createUserDto);
     
     return this.userService.create(createUserDto, photoPath);
   }
 
 
-  // @Get()
-  // findAll() {
-  //   return this.userService.findAll();
-  // }
+  @Get()
+  findAll() {
+    return this.userService.findAll();
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -53,6 +49,6 @@ export class UserController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+    return this.userService.remove(id);
   }
 }

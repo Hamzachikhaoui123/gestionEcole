@@ -17,8 +17,8 @@ import { join } from 'path';
       password: '',
       database: 'gestionEvele',
       entities: [User],
-      synchronize:true
-     }),
+      synchronize: false, // Désactivez ceci
+    }),
       ServeStaticModule.forRoot({
         rootPath: join(__dirname, '..', 'uploads'), // Dossier pour les photos
       }),
