@@ -30,14 +30,16 @@ export class UserController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     const photoPath = file ? file.path : null;
+    console.log('createUserDto',createUserDto);
+    
     return this.userService.create(createUserDto, photoPath);
   }
 
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.userService.findAll();
+  // }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

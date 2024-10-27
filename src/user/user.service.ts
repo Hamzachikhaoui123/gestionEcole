@@ -10,17 +10,18 @@ export class UserService {
   constructor(@InjectRepository(User) private userRepository:Repository<User>){}
 async  create(createUserDto: CreateUserDto,profilePhoto: string):Promise<User> {
     const  user= await this.userRepository.create({...createUserDto,createAt:new Date(),photo:profilePhoto})
+    
     return this.userRepository.save(user);
   }
 
-  async findAll(): Promise<User[]> {
-    try {
-      // Vous pouvez spécifier un ordre si vous le souhaitez, par exemple par date de création
-      return await this.userRepository.find();
-    }  catch (error) {
-      throw new InternalServerErrorException('Impossible de récupérer les utilisateurs');
-    }
-  }
+  // async findAll(): Promise<User[]> {
+  //   try {
+  //     // Vous pouvez spécifier un ordre si vous le souhaitez, par exemple par date de création
+  //     return await this.userRepository.find();
+  //   }  catch (error) {
+  //     throw new InternalServerErrorException('Impossible de récupérer les utilisateurs');
+  //   }
+  // }
 
   findOne(id: number) {
     return `This action returns a #${id} user`;

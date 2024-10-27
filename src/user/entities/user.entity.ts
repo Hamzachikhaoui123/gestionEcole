@@ -10,8 +10,7 @@ export class User {
     name: string;
 
     // Utilisez un type date ou number en fonction du besoin
-    @Column({ type: 'bigint' })
-    date: number;
+ 
 
     // Vérifiez que USERROLE est bien un enum dans votre code
     @Column({
